@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div{
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <img src="images/1.jpg" alt="" width="400">
+  </div>
+  <script>
+    var img = document.getElementsByTagName("img")[0]
+
+      onmousewheel = ()=>{
+        if(event.wheelDelta>=120){
+          img.width+=10
+        }else if(event.wheelDelta <=-120){
+          img.width-=10
+        }
+      }
+      img.onmousedown = event=>{
+        console.log(event.offsetX)
+      }
+    
+
+    
+  </script>
+</body>
+</html>

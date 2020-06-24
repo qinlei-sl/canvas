@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/webuploader.css">
+</head>
+
+<body>
+  <script src="build/pdf.js"></script>
+  <h1>可以对PDF 和 图片 分别添加</h1>
+  <canvas id="the-canvas"></canvas>
+  <script>
+    var json = {
+      url: "pdf/web.j.pdf",
+      // img: "images/1.jpg"
+    }
+    // 获取文件类型
+    var urls = json.url.split(".");
+    var length = urls.length - 1;
+    var urlA = urls[length];
+    // console.log(a)
+    var canvas = document.getElementById('the-canvas');
+    var context = canvas.getContext('2d');
+    //判断文件类型
+    if(urlA == 'pdf'){
+      pdf(json.url)
+    }else if(urlA == 'img'){
+      img(json.url)
+      // console.log("我是图片")
+    }
+
+    //定义阅览图片
+    function img(url){
+      var img = new Image();
+      img.src = url;
+      img.onload = function(){
+        context.drawImage(img,0,0,400,360)
+      }
+      canvas.width = img.width;
+      canvas.height = img.height;
+    }
+
+    //定义阅览PDF
+    function pdf(url) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        './build/pdf.worker.js'; //加载核心库
+      var loadingTask = pdfjsLib.getDocument({
+        url: url,
+      }); // _url为后台请求pdf流的路径
+
+      loadingTask.promise.then(function (pdf) {
+        pdf.getPage(1).then(function (page) {
+
+          var scale = 2; //pdf 设置显示缩放倍数
+          
+          var viewport = page.getViewport({
+            scale: scale,
+          }); //注意：必须是一个对象
+          canvas.height = viewport.height; //同步pdf文档高度
+          canvas.width = viewport.width; //同步pdf宽度
+          var renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+          }; //必须 不太懂意思？？
+          page.render(renderContext); //渲染页面
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

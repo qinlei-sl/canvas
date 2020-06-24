@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h2>Canvas</h2>
+  <img src="imagrs/1.jpg" alt="" width="400">
+  <canvas id="tutorial" width="400" height="400"></canvas>
+  <script>
+    ! function () {
+      var canvas = document.getElementById('tutorial'); //获取Canvas对象
+      var ctx = canvas.getContext('2d'); //获取对应的画笔
+      var img = new Image(); //创建新的图像对象
+      img.src = 'imagrs/1.jpg' //图片地址
+      img.onload = function () { //浏览器加载完毕后在绘制图片
+        ctx.drawImage(img, 20, 20, 400, 360)
+        //drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
+        // img:规定要使用的图像，画布或者视频
+        //sx 可选 开始裁剪的x位置
+        //sy 可选 开始裁剪的y位置
+        //swidth 可选。被剪切图像的宽度
+        //sheight 可选。被剪切图像的高度。
+        //x 在画布上放置图像的 x 坐标位置。
+        //y 在画布上放置图像的 y 坐标位置。
+        //width 可选。要使用的图像的宽度（伸展或缩小图像）。
+        //height 可选。要使用的图像的高度（伸展或缩小图像）。
+        // ctx.beginPath();
+        // ctx.clip()
+         tutorial.onmousedown = (ev) => {
+         var ev = ev || window.event
+         // console.log(ev.offsetX)
+         var X = ev.offsetX,
+         Y = ev.offsetY;
+         window.onmousemove = (event) => {
+         var event = event || window.event
+        // ctx.clearRect(0, 0, 400, 400)
+        //  ctx.beginPath();
+         var width = event.offsetX - X,heigth = event.offsetY - Y
+         
+        //  ctx.strokeRect(X,Y,width,heigth);
+        //  ctx.strokeRect(X,Y,100,100);
+        //  ctx.rect(X,Y,width,heigth);裁剪的坐标及大小
+        //  ctx.clip();裁剪
+        //  drawRect()
+         }
+        window.onmouseup = () => {
+           window.onmousemove = null
+        }
+         }
+      }
+
+
+      // 图片的裁剪
+
+
+    }()
+  </script>
+</body>
+
+</html>
